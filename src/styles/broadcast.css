@@ -1,0 +1,327 @@
+/* ============================================================
+   Broadcast layer — restrained, legible, always secondary to
+   the 3D scene. Everything here is HTML over the canvas.
+   ============================================================ */
+
+.bc {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.bc > * {
+  pointer-events: auto;
+}
+
+/* ---------------- score strip ---------------- */
+.bc__score {
+  position: absolute;
+  left: var(--gutter);
+  top: calc(var(--header-h) + 0.5rem);
+  width: 16.5rem;
+  padding: 0.7rem 0.85rem 0.6rem;
+  background: linear-gradient(180deg, rgba(8, 13, 11, 0.9), rgba(4, 7, 6, 0.94));
+  border: 1px solid rgba(243, 240, 232, 0.14);
+  box-shadow: 0 24px 48px -28px rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(10px);
+}
+
+.bc__scoreHead {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid rgba(243, 240, 232, 0.12);
+}
+
+.bc__sim {
+  font-family: var(--font-mono);
+  font-size: 0.4375rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #070a09;
+  background: var(--gold-400);
+  padding: 0.1rem 0.28rem;
+  border-radius: 1px;
+}
+
+.bc__team {
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--chalk);
+}
+
+.bc__scoreBody {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding-top: 0.45rem;
+}
+
+.bc__runs {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--chalk);
+}
+
+.bc__wickets {
+  font-size: 1rem;
+  color: var(--ash-400);
+}
+
+.bc__meta {
+  display: grid;
+  gap: 1px;
+}
+
+.bc__metaKey {
+  font-family: var(--font-mono);
+  font-size: 0.4375rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ash-500);
+}
+
+.bc__metaVal {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--chalk-dim);
+}
+
+.bc__disclaimer {
+  margin-top: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.4375rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ash-500);
+}
+
+/* ---------------- lower third ---------------- */
+.bc__lower {
+  position: absolute;
+  left: var(--gutter);
+  bottom: 8.5rem;
+  min-width: 20rem;
+  padding: 0.85rem 1.1rem 0.9rem;
+  background: linear-gradient(90deg, rgba(8, 13, 11, 0.94), rgba(8, 13, 11, 0.55));
+  border-left: 3px solid var(--lime-400);
+  opacity: 0;
+  transform: translateX(-1.25rem);
+  transition:
+    opacity 480ms var(--ease-bloom),
+    transform 480ms var(--ease-bloom);
+}
+
+.bc__lower.is-on {
+  opacity: 1;
+  transform: none;
+}
+
+.bc__lowerBar {
+  display: block;
+}
+
+.bc__lowerKicker {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--lime-400);
+  margin-bottom: 0.2rem;
+}
+
+.bc__lowerName {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.bc__lowerRole {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ash-300);
+  margin-top: 0.2rem;
+}
+
+.bc__lowerStats {
+  display: flex;
+  gap: 1.25rem;
+  margin-top: 0.6rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(243, 240, 232, 0.14);
+}
+
+.bc__lowerStats li {
+  display: grid;
+  gap: 1px;
+}
+
+.bc__lowerKey {
+  font-family: var(--font-mono);
+  font-size: 0.4375rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ash-500);
+}
+
+.bc__lowerVal {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--chalk);
+}
+
+/* ---------------- result ---------------- */
+.bc__result {
+  position: absolute;
+  left: 50%;
+  top: 31%;
+  transform: translate(-50%, -50%) scale(0.97);
+  width: min(28rem, 88vw);
+  padding: 1.1rem 1.35rem 1.2rem;
+  background: linear-gradient(180deg, rgba(9, 15, 12, 0.96), rgba(5, 8, 7, 0.96));
+  border: 1px solid rgba(198, 255, 61, 0.3);
+  box-shadow:
+    0 40px 90px -40px rgba(0, 0, 0, 1),
+    0 0 0 1px rgba(198, 255, 61, 0.08);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 320ms var(--ease-roll),
+    transform 420ms var(--ease-impact);
+}
+
+.bc__result.is-on {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  pointer-events: auto;
+}
+
+.bc__resultBar {
+  display: block;
+  height: 3px;
+  background: var(--lime-400);
+  margin-bottom: 0.8rem;
+}
+
+.bc__resultKicker {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ash-400);
+}
+
+.bc__resultValue {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 8vw, 5.5rem);
+  font-weight: 700;
+  line-height: 0.86;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--lime-400);
+  text-shadow: 0 0 40px rgba(198, 255, 61, 0.28);
+  margin: 0.15rem 0 0.35rem;
+}
+
+.bc__resultDetail {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ash-300);
+}
+
+.bc__resultActions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+/* ---------------- live ticker ---------------- */
+.bc__live {
+  position: absolute;
+  left: 50%;
+  bottom: 8.5rem;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.75rem;
+  background: rgba(8, 13, 11, 0.82);
+  border: 1px solid rgba(198, 255, 61, 0.24);
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lime-400);
+}
+
+.bc__live .eyebrow__dot {
+  width: 5px;
+  height: 5px;
+}
+
+/* ---------------- recruiter escape hatch ---------------- */
+.bc__recruiter {
+  position: absolute;
+  right: var(--gutter);
+  bottom: 8.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ash-400);
+  padding: 0.4rem 0.6rem;
+  border: 1px solid rgba(243, 240, 232, 0.16);
+  background: rgba(8, 13, 11, 0.7);
+}
+
+.bc__recruiter:hover {
+  color: var(--lime-400);
+  border-color: rgba(198, 255, 61, 0.35);
+}
+
+@media (max-width: 900px) {
+  .bc__score {
+    width: 11.5rem;
+    top: 3.9rem;
+    padding: 0.55rem 0.65rem 0.5rem;
+  }
+
+  .bc__lower {
+    bottom: 7.25rem;
+    min-width: 0;
+    width: calc(100% - 2 * var(--gutter));
+  }
+
+  .bc__lowerName {
+    font-size: 1.5rem;
+  }
+
+  .bc__live,
+  .bc__recruiter {
+    bottom: 7.25rem;
+  }
+
+  .bc__recruiter {
+    display: none;
+  }
+
+  .bc__result {
+    top: 38%;
+  }
+}

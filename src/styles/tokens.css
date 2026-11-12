@@ -1,0 +1,131 @@
+/* ============================================================
+   FIRST INNINGS — design tokens
+   One source of truth for colour, type, space, motion, depth.
+   ============================================================ */
+
+:root {
+  /* ---- Colour: surfaces ---------------------------------- */
+  --ink-950: #080b0a;
+  --ink-900: #0c1110;
+  --ink-850: #0f1614;
+  --ink-800: #131c19;
+  --pitch-950: #07120c;
+  --pitch-900: #0b1a13;
+  --pitch-800: #0f241a;
+  --pitch-700: #163122;
+
+  /* ---- Colour: line & text ------------------------------- */
+  --line: rgba(243, 240, 232, 0.09);
+  --line-soft: rgba(243, 240, 232, 0.055);
+  --line-strong: rgba(243, 240, 232, 0.2);
+  --chalk: #f3f0e8;
+  --chalk-dim: #d5d2c8;
+  --ash-300: #a8ada5;
+  --ash-400: #8d938c;
+  --ash-500: #6b716b;
+
+  /* ---- Colour: signal ------------------------------------ */
+  --lime-300: #daff85;
+  --lime-400: #c6ff3d;
+  --lime-600: #93c918;
+  --gold-300: #f0d28c;
+  --gold-400: #e2b23f;
+  --gold-700: #8a6a1c;
+  --ball-400: #d0394a;
+  --ball-500: #b4232f;
+
+  /* Signal aliases — semantic, so a re-theme is one edit */
+  --signal-live: var(--lime-400);
+  --signal-record: var(--gold-400);
+  --signal-warn: var(--ball-400);
+
+  /* ---- Typography ---------------------------------------- */
+  --font-display: 'Barlow Condensed', 'Arial Narrow', 'Helvetica Neue', sans-serif;
+  --font-sans: 'Archivo Variable', 'Archivo', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', 'Consolas', monospace;
+
+  --fs-mono-xs: 0.6875rem; /* 11 */
+  --fs-mono-sm: 0.75rem; /* 12 */
+  --fs-mono-md: 0.8125rem; /* 13 */
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-md: 1.0625rem;
+  --fs-lg: 1.25rem;
+  --fs-xl: 1.5rem;
+  --fs-2xl: clamp(1.75rem, 2.2vw, 2.125rem);
+  --fs-3xl: clamp(2.125rem, 3.6vw, 3rem);
+  --fs-4xl: clamp(2.5rem, 5vw, 4rem);
+  --fs-display: clamp(3.5rem, 11vw, 9.5rem);
+
+  --lh-tight: 0.92;
+  --lh-snug: 1.15;
+  --lh-body: 1.62;
+
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.06em;
+  --tracking-wider: 0.14em;
+
+  /* ---- Space (4px base) ---------------------------------- */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+  --s-9: 6rem;
+  --s-10: 8rem;
+
+  /* ---- Layout -------------------------------------------- */
+  --shell-max: 82.5rem; /* 1320 */
+  --gutter: clamp(1.25rem, 4vw, 3.5rem);
+  --header-h: 4.25rem;
+  --section-y: clamp(4.5rem, 9vw, 8.75rem);
+
+  /* ---- Radius: broadcast is hard-edged ------------------- */
+  --r-1: 2px;
+  --r-2: 4px;
+  --r-3: 8px;
+  --r-pill: 999px;
+
+  /* ---- Depth --------------------------------------------- */
+  --shadow-panel: 0 1px 0 rgba(243, 240, 232, 0.04) inset, 0 24px 60px -32px rgba(0, 0, 0, 0.9);
+  --shadow-lift: 0 32px 80px -40px rgba(0, 0, 0, 0.95);
+
+  /* ---- Motion -------------------------------------------- */
+  --ease-bloom: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-roll: cubic-bezier(0.83, 0, 0.17, 1);
+  --ease-impact: cubic-bezier(0.2, 1.5, 0.4, 1);
+  --d-1: 90ms;
+  --d-2: 160ms;
+  --d-3: 240ms;
+  --d-4: 400ms;
+  --d-5: 640ms;
+
+  /* ---- Focus --------------------------------------------- */
+  --focus-ring: 0 0 0 2px var(--ink-950), 0 0 0 4px var(--lime-400);
+}
+
+/* Reduced-motion and the manual "Motion off" toggle both land here, so
+   every consumer can rely on a single contract. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --d-1: 0ms;
+    --d-2: 0ms;
+    --d-3: 0ms;
+    --d-4: 0ms;
+    --d-5: 0ms;
+  }
+}
+
+html[data-motion='off'] {
+  --d-1: 0ms;
+  --d-2: 0ms;
+  --d-3: 0ms;
+  --d-4: 0ms;
+  --d-5: 0ms;
+  scroll-behavior: auto;
+}

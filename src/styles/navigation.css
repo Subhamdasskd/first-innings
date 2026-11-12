@@ -1,0 +1,273 @@
+/* ============================================================
+   The match centre — a broadcast score bug pinned to the foot of
+   the viewport. Team block, section index, progress rail.
+   ============================================================ */
+
+.matchCentre {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 55;
+  background: #070b09;
+  border-top: 1px solid var(--line);
+  box-shadow: 0 -30px 70px -46px rgba(0, 0, 0, 0.95);
+  transform: translateY(102%);
+  visibility: hidden;
+  transition:
+    transform 420ms var(--ease-bloom),
+    visibility 0s linear 420ms;
+}
+
+.matchCentre.is-visible {
+  transform: none;
+  visibility: visible;
+  transition:
+    transform 420ms var(--ease-bloom),
+    visibility 0s;
+}
+
+.matchCentre__progress {
+  position: absolute;
+  inset: -1px 0 auto 0;
+  height: 2px;
+  background: rgba(243, 240, 232, 0.06);
+}
+
+.matchCentre__progress span {
+  display: block;
+  height: 100%;
+  width: calc(var(--page-progress, 0) * 100%);
+  background: linear-gradient(90deg, rgba(198, 255, 61, 0.35), var(--lime-400));
+  box-shadow: 0 0 14px rgba(198, 255, 61, 0.45);
+}
+
+.matchCentre__inner {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  height: 4.25rem;
+  max-width: var(--shell-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* ---------- left: team block ---------- */
+.matchCentre__status {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.matchCentre__live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--lime-400);
+}
+
+.matchCentre__live .eyebrow__dot {
+  width: 5px;
+  height: 5px;
+}
+
+.matchCentre__name {
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* ---------- centre: sections ---------- */
+.matchCentre__nav ul {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.35rem, 1.5vw, 1.35rem);
+}
+
+.matchCentre__link {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  padding: 0.45rem 0.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ash-400);
+  white-space: nowrap;
+  transition: color var(--d-2) var(--ease-roll);
+}
+
+.matchCentre__link:hover {
+  color: var(--chalk);
+}
+
+.matchCentre__link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--lime-400);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--d-3) var(--ease-bloom);
+}
+
+.matchCentre__link.is-active {
+  color: var(--chalk);
+}
+
+.matchCentre__link.is-active::after {
+  transform: scaleX(1);
+}
+
+.matchCentre__index {
+  font-size: 0.5rem;
+  color: var(--ash-500);
+}
+
+.matchCentre__link.is-active .matchCentre__index {
+  color: var(--lime-400);
+}
+
+/* ---------- right: position ---------- */
+.matchCentre__meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.matchCentre__count {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  color: var(--chalk-dim);
+}
+
+.matchCentre__countSep {
+  color: var(--ash-500);
+  margin-inline: 0.15rem;
+}
+
+.matchCentre__replay {
+  display: inline-grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r-1);
+  color: var(--ash-500);
+  transition:
+    color var(--d-2) var(--ease-roll),
+    border-color var(--d-2) var(--ease-roll);
+}
+
+.matchCentre__replay:hover {
+  color: var(--lime-400);
+  border-color: rgba(198, 255, 61, 0.35);
+}
+
+/* ---------- compact (mobile) ---------- */
+.matchCentre__compact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  height: 3.5rem;
+  padding-inline: var(--gutter);
+  color: var(--chalk);
+  text-align: left;
+}
+
+.matchCentre__compactLeft {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.matchCentre__compactLeft .eyebrow__dot {
+  width: 5px;
+  height: 5px;
+}
+
+.matchCentre__compactIndex {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.12em;
+  color: var(--lime-400);
+}
+
+.matchCentre__compactLabel {
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.matchCentre__compactRight {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex: none;
+  color: var(--ash-400);
+}
+
+.matchCentre__dots {
+  display: inline-flex;
+  gap: 3px;
+}
+
+.matchCentre__dot {
+  width: 11px;
+  height: 2px;
+  background: rgba(243, 240, 232, 0.18);
+  transition: background var(--d-2) var(--ease-roll);
+}
+
+.matchCentre__dot.is-on {
+  background: var(--lime-400);
+}
+
+/* ---------- sheet additions ---------- */
+.sheet__replay {
+  color: var(--ash-300);
+}
+
+/* ---------- reserved space ---------- */
+.appShell {
+  padding-bottom: var(--matchbar-space, 0px);
+}
+
+@media (max-width: 1120px) {
+  .matchCentre__link {
+    font-size: 0.5625rem;
+    letter-spacing: 0.1em;
+  }
+
+  .matchCentre__status {
+    display: none;
+  }
+
+  .matchCentre__inner {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+}

@@ -1,0 +1,1150 @@
+/* ============================================================
+   SCENE 00 — The entrance
+   A night stadium built from light, not from images: layered
+   gradients for sky and outfield, an SVG bowl with tiered stands
+   and advertising boards, floodlight towers seated behind the
+   roofline with their cones in front, and one warm ball crossing
+   the frame. All DOM — no image waits on the critical path.
+   ============================================================ */
+
+.stadium {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  grid-template-rows: var(--header-h) 1fr auto;
+  overflow: hidden;
+  isolation: isolate;
+  background: #03060a;
+  color: var(--chalk);
+}
+
+.stadium__scene {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* ---------------- sky ---------------- */
+.stadium__sky {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 120% 70% at 50% 40%, #0a1b17 0%, #06110f 32%, #04090d 64%, #010306 100%),
+    linear-gradient(180deg, #010306 0%, #040a0c 40%, #050d0b 100%);
+}
+
+.stadium__horizon {
+  position: absolute;
+  left: -12%;
+  right: -12%;
+  top: 20%;
+  height: 22%;
+  background: radial-gradient(
+    ellipse 44% 100% at 50% 100%,
+    rgba(198, 255, 61, 0.1),
+    rgba(120, 200, 150, 0.045) 44%,
+    transparent 76%
+  );
+  filter: blur(38px);
+  opacity: 0.45;
+  transition: opacity 1300ms var(--ease-bloom) 500ms;
+}
+
+.stadium.is-lit .stadium__horizon {
+  opacity: 1;
+}
+
+/* ---------------- stands ---------------- */
+.stadium__stands {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 21.5%;
+  width: 100%;
+  height: 32.5%;
+  z-index: 2;
+  mask-image: linear-gradient(180deg, #000 0%, #000 86%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 86%, transparent 100%);
+}
+
+/* ---------------- outfield ---------------- */
+.stadium__field {
+  position: absolute;
+  left: -30%;
+  right: -30%;
+  top: 51%;
+  z-index: 3;
+  bottom: -12%;
+  border-radius: 50% 50% 0 0 / 18% 18% 0 0;
+  mask-image: linear-gradient(180deg, transparent 0%, #000 9%, #000 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 9%, #000 100%);
+  background: radial-gradient(
+    ellipse 52% 86% at 50% 8%,
+    #1b4a32 0%,
+    #13391f 22%,
+    #0b2317 48%,
+    #060f0b 78%,
+    #030705 100%
+  );
+  filter: brightness(0.6);
+  transition: filter 1500ms var(--ease-bloom) 320ms;
+}
+
+.stadium.is-lit .stadium__field {
+  filter: brightness(1);
+}
+
+.stadium__stripes {
+  position: absolute;
+  left: 50%;
+  top: 53%;
+  z-index: 3;
+  width: 150%;
+  height: 58%;
+  transform: translateX(-50%) perspective(520px) rotateX(63deg);
+  transform-origin: 50% 0%;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(214, 255, 208, 0.05) 0 4.5%,
+    transparent 4.5% 9%
+  );
+  mask-image: radial-gradient(ellipse 46% 74% at 50% 8%, #000 0%, transparent 74%);
+  -webkit-mask-image: radial-gradient(ellipse 46% 74% at 50% 8%, #000 0%, transparent 74%);
+  opacity: 0;
+  transition: opacity 1600ms var(--ease-bloom) 600ms;
+}
+
+.stadium.is-lit .stadium__stripes {
+  opacity: 0.85;
+}
+
+.stadium__pitch {
+  position: absolute;
+  left: 50%;
+  top: 55.5%;
+  z-index: 4;
+  width: 15%;
+  height: 33%;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, #4a6d4c 0%, #365539 40%, #223420 100%);
+  clip-path: polygon(42% 0, 58% 0, 96% 100%, 4% 100%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 56%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 56%, transparent 100%);
+  opacity: 0;
+  transition: opacity 1400ms var(--ease-bloom) 700ms;
+  filter: blur(0.5px);
+}
+
+.stadium.is-lit .stadium__pitch {
+  opacity: 0.34;
+}
+
+.stadium__crease {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: rgba(243, 240, 232, 0.26);
+}
+
+.stadium__crease--far {
+  top: 13%;
+  height: 1px;
+  opacity: 0.5;
+}
+
+.stadium__crease--near {
+  bottom: 18%;
+  opacity: 0.7;
+}
+
+.stadium__stumps {
+  position: absolute;
+  left: 50%;
+  top: 7%;
+  width: 3.8%;
+  height: 6.5%;
+  transform: translateX(-50%);
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(243, 240, 232, 0.5) 0 1.4px,
+    transparent 1.4px 6px
+  );
+  opacity: 0.6;
+}
+
+/* Pools of light where the cones land — the field reading as lit grass. */
+.stadium__pools {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 51%;
+  z-index: 4;
+  bottom: 0;
+  background:
+    radial-gradient(ellipse 28% 20% at 24% 30%, rgba(206, 255, 192, 0.1), transparent 70%),
+    radial-gradient(ellipse 28% 20% at 76% 30%, rgba(206, 255, 192, 0.1), transparent 70%),
+    radial-gradient(ellipse 34% 26% at 50% 58%, rgba(214, 255, 202, 0.11), transparent 72%);
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 1300ms var(--ease-bloom) 780ms;
+}
+
+.stadium.is-lit .stadium__pools {
+  opacity: 1;
+}
+
+/* ---------------- floodlight fixtures ---------------- */
+.stadium__fixtures {
+  position: absolute;
+  inset: 0;
+}
+
+.stadium__fixtures--back {
+  z-index: 1;
+}
+
+.stadium__fixtures--front {
+  z-index: 5;
+}
+
+/* Shared geometry so a mast and its light always register. */
+.fixture {
+  position: absolute;
+  bottom: 68%;
+  width: 5.25rem;
+}
+
+.fixture--left-near {
+  left: 6%;
+}
+
+.fixture--right-near {
+  right: 6%;
+}
+
+.fixture--left-far {
+  left: 21%;
+  bottom: 69%;
+  transform: scale(0.72);
+  opacity: 0.78;
+}
+
+.fixture--right-far {
+  right: 21%;
+  bottom: 69%;
+  transform: scale(0.72);
+  opacity: 0.78;
+}
+
+/* --- mast and lamps (behind the bowl) --- */
+.tower {
+  height: clamp(6rem, 17vh, 10.5rem);
+}
+
+.tower__mast {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 7px;
+  height: 100%;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #33453d 0 42%, #0c1411 42% 100%);
+  clip-path: polygon(44% 0, 56% 0, 100% 100%, 0% 100%);
+}
+
+.tower__bank {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 100%;
+  height: 3.25rem;
+  transform: translateX(-50%);
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 2px;
+  padding: 4px;
+  background: linear-gradient(180deg, #111d19, #070d0b);
+  border: 1px solid rgba(243, 240, 232, 0.08);
+  box-shadow: 0 10px 26px -12px #000;
+}
+
+.tower__lamp {
+  background: #16211d;
+  border-radius: 1px;
+  transition:
+    background 320ms var(--ease-roll) var(--d, 0ms),
+    box-shadow 320ms var(--ease-roll) var(--d, 0ms);
+}
+
+.stadium.is-lit .tower__lamp {
+  background: #ecf8e2;
+  box-shadow:
+    0 0 6px rgba(219, 255, 195, 0.9),
+    0 0 16px rgba(198, 255, 61, 0.3);
+}
+
+.stadium.is-lit .tower__bank {
+  animation: bank-strike 560ms steps(1, end) var(--d, 0ms) 1;
+}
+
+@keyframes bank-strike {
+  0% {
+    filter: brightness(0.35);
+  }
+  18% {
+    filter: brightness(1.5);
+  }
+  30% {
+    filter: brightness(0.5);
+  }
+  46% {
+    filter: brightness(1.55);
+  }
+  100% {
+    filter: brightness(1);
+  }
+}
+
+/* --- light (in front of the bowl) --- */
+.towerLight {
+  height: clamp(6rem, 17vh, 10.5rem);
+}
+
+.tower__bloom {
+  position: absolute;
+  left: 50%;
+  top: 1.6rem;
+  width: 30rem;
+  height: 30rem;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle,
+    rgba(228, 255, 208, 0.4) 0%,
+    rgba(184, 238, 172, 0.15) 20%,
+    rgba(150, 214, 160, 0.04) 42%,
+    transparent 64%
+  );
+  filter: blur(14px);
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 950ms var(--ease-bloom) var(--d, 0ms);
+}
+
+.stadium.is-lit .tower__bloom {
+  opacity: 0.85;
+}
+
+.tower__flare {
+  position: absolute;
+  left: 50%;
+  top: 1.6rem;
+  width: 52rem;
+  height: 10px;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(180, 220, 255, 0.05) 18%,
+    rgba(226, 255, 210, 0.22) 46%,
+    rgba(226, 255, 210, 0.22) 54%,
+    rgba(180, 220, 255, 0.05) 82%,
+    transparent
+  );
+  filter: blur(3px);
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 1200ms var(--ease-bloom) calc(var(--d, 0ms) + 260ms);
+}
+
+.stadium.is-lit .tower__flare {
+  opacity: 0.5;
+}
+
+.tower__cone {
+  position: absolute;
+  left: 50%;
+  top: 3.2rem;
+  width: 42vw;
+  height: 76vh;
+  transform: translateX(-50%);
+  clip-path: polygon(48.4% 0%, 51.6% 0%, 100% 100%, 0% 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(222, 255, 206, 0.17) 0%,
+    rgba(206, 250, 198, 0.05) 34%,
+    rgba(176, 238, 186, 0.018) 62%,
+    transparent 84%
+  );
+  filter: blur(11px);
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 1150ms var(--ease-bloom) calc(var(--d, 0ms) + 180ms);
+}
+
+.stadium.is-lit .tower__cone {
+  opacity: 0.56;
+}
+
+/* ---------------- atmosphere ---------------- */
+/* Keeps the copy legible over the scene. Desktop has room; small screens do not. */
+.stadium__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: none;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(2, 6, 9, 0) 6%,
+      rgba(2, 6, 9, 0.32) 18%,
+      rgba(2, 6, 9, 0.58) 40%,
+      rgba(2, 6, 9, 0.5) 62%,
+      rgba(2, 6, 9, 0.12) 86%
+    );
+}
+
+.stadium__haze {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(64px);
+  mix-blend-mode: screen;
+  background: radial-gradient(circle, rgba(150, 220, 180, 0.1), transparent 70%);
+  opacity: 0.5;
+  z-index: 6;
+}
+
+.stadium__haze--a {
+  left: -10%;
+  bottom: 4%;
+  width: 62%;
+  height: 42%;
+  animation: haze-drift 46s ease-in-out infinite;
+}
+
+.stadium__haze--b {
+  right: -8%;
+  bottom: 12%;
+  width: 54%;
+  height: 36%;
+  animation: haze-drift 62s ease-in-out infinite reverse;
+}
+
+@keyframes haze-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(3%, -2.5%, 0) scale(1.09);
+  }
+}
+
+/* ---------------- the ball ---------------- */
+.stadium__ball {
+  position: absolute;
+  top: -4%;
+  right: 6%;
+  z-index: 7;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 28%, #f4868d 0%, #c8303f 38%, #8d1622 72%, #4a0a10 100%);
+  box-shadow:
+    0 0 14px rgba(200, 60, 70, 0.55),
+    0 0 42px rgba(180, 35, 47, 0.28);
+  opacity: 0;
+  animation: ball-flight 2.4s cubic-bezier(0.42, 0, 0.58, 1) 3s both;
+}
+
+.stadium__ball--trail {
+  filter: blur(9px);
+  opacity: 0;
+  box-shadow: 0 0 26px rgba(200, 60, 70, 0.4);
+  animation-duration: 2.2s;
+  animation-delay: 3.1s;
+}
+
+@keyframes ball-flight {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.45);
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  40% {
+    transform: translate3d(-17vw, 36vh, 0) scale(1.05);
+    opacity: 1;
+  }
+  72% {
+    transform: translate3d(-33vw, 72vh, 0) scale(1.7);
+    opacity: 1;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(-46vw, 106vh, 0) scale(3.1);
+    opacity: 0;
+  }
+}
+
+/* ---------------- grade & grain ---------------- */
+.stadium__grade {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  background:
+    radial-gradient(ellipse 116% 86% at 50% 46%, transparent 36%, rgba(1, 4, 7, 0.62) 100%),
+    linear-gradient(180deg, rgba(1, 4, 8, 0.5) 0%, transparent 22%, transparent 78%, rgba(1, 4, 7, 0.6) 100%);
+}
+
+.stadium__grain {
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------------- chrome ---------------- */
+.stadium__top {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  height: var(--header-h);
+  padding-inline: var(--gutter);
+}
+
+.stadium__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.stadium__brandMark {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid rgba(198, 255, 61, 0.3);
+  border-radius: 50%;
+  color: var(--lime-400);
+}
+
+.stadium__topRight {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+
+.stadium__live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--lime-400);
+}
+
+.stadium__main {
+  position: relative;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5rem);
+  padding-inline: var(--gutter);
+  padding-bottom: clamp(1rem, 3vh, 2.5rem);
+  min-height: 0;
+}
+
+.stadium__eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-xs);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--lime-400);
+  margin-bottom: clamp(0.6rem, 1.6vh, 1.1rem);
+}
+
+.stadium__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(3.25rem, 10.5vw, 9.5rem);
+  line-height: 0.79;
+  letter-spacing: -0.012em;
+  text-transform: uppercase;
+  text-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+}
+
+.stadium__titleLine {
+  display: block;
+}
+
+.stadium__titleLine--outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(243, 240, 232, 0.4);
+}
+
+.stadium__player {
+  margin-top: clamp(0.75rem, 2vh, 1.25rem);
+  padding-top: clamp(0.6rem, 1.6vh, 1rem);
+  border-top: 1px solid rgba(243, 240, 232, 0.14);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--chalk-dim);
+}
+
+.stadium__tagline {
+  margin-top: 0.75rem;
+  max-width: 32ch;
+  font-size: clamp(0.9375rem, 1.2vw, 1.125rem);
+  line-height: 1.5;
+  color: var(--ash-300);
+}
+
+.stadium__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-3);
+  margin-top: clamp(1.25rem, 3vh, 2rem);
+}
+
+.stadium__enter {
+  min-height: 3.25rem;
+  padding-inline: 1.75rem;
+}
+
+.stadium__skipTop {
+  color: var(--ash-300);
+}
+
+.stadium__hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ash-500);
+}
+
+/* ---------------- scoreboard ---------------- */
+.stadium__board {
+  position: relative;
+  width: 15.5rem;
+  justify-self: end;
+  align-self: center;
+  padding: 0.9rem 1rem 0.7rem;
+  border: 1px solid rgba(243, 240, 232, 0.12);
+  background: linear-gradient(180deg, rgba(10, 18, 15, 0.9), rgba(3, 7, 6, 0.94));
+  box-shadow:
+    0 40px 80px -40px #000,
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(0.75rem);
+}
+
+.stadium__board::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.045) 0 1px,
+    transparent 1px 3px
+  );
+  mix-blend-mode: overlay;
+}
+
+.stadium__boardHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid rgba(243, 240, 232, 0.12);
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-300);
+}
+
+.stadium__boardDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--lime-400);
+  box-shadow: 0 0 8px rgba(198, 255, 61, 0.8);
+  animation: pulse-dot 2.4s var(--ease-roll) infinite;
+}
+
+.stadium__boardRows {
+  display: grid;
+  gap: 0.4rem;
+  padding-top: 0.6rem;
+}
+
+.stadium__boardRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.stadium__boardRow dt {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ash-500);
+}
+
+.stadium__boardRow dd {
+  font-family: var(--font-mono);
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1;
+  color: #f2cb74;
+  text-shadow: 0 0 12px rgba(226, 178, 63, 0.45);
+}
+
+.stadium__boardFoot {
+  margin-top: 0.7rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid rgba(243, 240, 232, 0.1);
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ash-500);
+}
+
+/* ---------------- match card ---------------- */
+.stadium__matchCard {
+  position: relative;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  padding-inline: var(--gutter);
+  border-top: 1px solid rgba(243, 240, 232, 0.12);
+  background: linear-gradient(180deg, rgba(3, 7, 6, 0.15), rgba(3, 7, 6, 0.7));
+  backdrop-filter: blur(8px);
+}
+
+.stadium__matchCell {
+  display: grid;
+  gap: 0.3rem;
+  padding: 0.85rem clamp(0.6rem, 1.4vw, 1.25rem);
+  border-left: 1px solid rgba(243, 240, 232, 0.07);
+}
+
+.stadium__matchCell:first-child {
+  border-left: 0;
+  padding-left: 0;
+}
+
+.stadium__matchKey {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ash-500);
+}
+
+.stadium__matchVal {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--chalk-dim);
+}
+
+.stadium__matchVal--live {
+  color: var(--lime-400);
+}
+
+/* ---------------- staged reveals ---------------- */
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-motion='off']) .stadium__titleLine {
+    opacity: 0;
+    transform: translateY(0.34em);
+  }
+
+  html:not([data-motion='off']) .stadium__player,
+  html:not([data-motion='off']) .stadium__tagline,
+  html:not([data-motion='off']) .stadium__actions,
+  html:not([data-motion='off']) .stadium__hint,
+  html:not([data-motion='off']) .stadium__eyebrow {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+
+  html:not([data-motion='off']) .stadium__board {
+    transition:
+      opacity 900ms var(--ease-bloom) 900ms,
+      transform 900ms var(--ease-bloom) 900ms;
+  }
+
+  html:not([data-motion='off']) .stadium.is-lit .stadium__titleLine {
+    animation: intro-rise 900ms var(--ease-bloom) forwards;
+  }
+
+  html:not([data-motion='off']) .stadium.is-lit .stadium__titleLine:nth-child(2) {
+    animation-delay: 120ms;
+  }
+
+  html:not([data-motion='off']) .stadium.is-lit .stadium__eyebrow {
+    animation: intro-rise 700ms var(--ease-bloom) 200ms forwards;
+  }
+
+  html:not([data-motion='off']) .stadium.is-lit .stadium__player {
+    animation: intro-rise 700ms var(--ease-bloom) 520ms forwards;
+  }
+
+  html:not([data-motion='off']) .stadium.is-lit .stadium__tagline {
+    animation: intro-rise 700ms var(--ease-bloom) 620ms forwards;
+  }
+
+  html:not([data-motion='off']) .stadium.is-lit .stadium__actions {
+    animation: intro-rise 700ms var(--ease-bloom) 740ms forwards;
+  }
+
+  html:not([data-motion='off']) .stadium.is-lit .stadium__hint {
+    animation: intro-rise 700ms var(--ease-bloom) 900ms forwards;
+  }
+}
+
+.stadium.is-lit .stadium__board {
+  opacity: 1;
+  transform: none;
+}
+
+@keyframes intro-rise {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------------- exit ---------------- */
+.stadium.is-entering {
+  animation: stadium-push 880ms var(--ease-bloom) forwards;
+  pointer-events: none;
+}
+
+@keyframes stadium-push {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.14);
+    opacity: 0;
+  }
+}
+
+.stadium.is-entering .stadium__field,
+.stadium.is-entering .stadium__pitch {
+  filter: brightness(1.35);
+  transition: filter 700ms var(--ease-bloom);
+}
+
+.stadium__wipe {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(198, 255, 61, 0.1) 42%,
+    rgba(198, 255, 61, 0.55) 50%,
+    rgba(198, 255, 61, 0.1) 58%,
+    transparent 100%
+  );
+  animation: intro-wipe 780ms var(--ease-bloom) forwards;
+  pointer-events: none;
+}
+
+@keyframes intro-wipe {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+/* ---------------- responsive ---------------- */
+@media (max-width: 1180px) {
+  .stadium__board {
+    width: 13.5rem;
+  }
+}
+
+@media (max-width: 980px) {
+  .stadium__main {
+    grid-template-columns: minmax(0, 1fr);
+    align-content: center;
+    gap: var(--s-5);
+  }
+
+  .stadium__board {
+    display: none;
+  }
+
+  .stadium__title {
+    font-size: clamp(3rem, 15vw, 6.5rem);
+  }
+
+  .stadium__tagline {
+    max-width: 40ch;
+  }
+
+  .stadium__matchCard {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .stadium__matchCell:nth-child(odd) {
+    border-left: 0;
+    padding-left: 0;
+  }
+
+  .stadium__matchCell:nth-child(-n + 4) {
+    border-bottom: 1px solid rgba(243, 240, 232, 0.06);
+  }
+
+  .stadium__matchCell:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .fixture--left-far,
+  .fixture--right-far {
+    display: none;
+  }
+
+  .stadium__scrim {
+    display: block;
+  }
+
+  .stadium__stands {
+    top: 26%;
+    height: 30%;
+  }
+
+  .stadium__field {
+    top: 55%;
+  }
+
+  .stadium__pools {
+    top: 55%;
+  }
+
+  .stadium__pitch {
+    top: 59%;
+  }
+
+  .stadium__stripes {
+    top: 57%;
+  }
+
+  .stadium__horizon {
+    top: 24%;
+  }
+}
+
+@media (max-width: 720px) {
+  .stadium__ball,
+  .stadium__ball--trail {
+    display: none;
+  }
+
+  .stadium__hint,
+  .stadium__live {
+    display: none;
+  }
+
+  .stadium__matchCell {
+    padding: 0.6rem 0.5rem;
+  }
+
+  .stadium__matchKey {
+    font-size: 0.4375rem;
+  }
+
+  .stadium__matchVal {
+    font-size: 0.625rem;
+  }
+
+  .fixture {
+    opacity: 0.5;
+    width: 3.75rem;
+  }
+
+  .fixture--left-near {
+    left: 2%;
+  }
+
+  .fixture--right-near {
+    right: 2%;
+  }
+
+  .tower__bank {
+    height: 2.5rem;
+    gap: 1.5px;
+    padding: 3px;
+  }
+
+  .stadium__ads {
+    display: none;
+  }
+
+  .stadium__matchCell:nth-child(4) {
+    display: none;
+  }
+
+  .stadium__matchCell:last-child {
+    grid-column: auto;
+  }
+
+  .stadium__matchCell:nth-child(-n + 4) {
+    border-bottom: 1px solid rgba(243, 240, 232, 0.06);
+  }
+
+  .stadium__scrim {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(2, 6, 9, 0) 6%,
+        rgba(2, 6, 9, 0.28) 18%,
+        rgba(2, 6, 9, 0.5) 40%,
+        rgba(2, 6, 9, 0.42) 62%,
+        rgba(2, 6, 9, 0.1) 86%
+      );
+  }
+
+  .tower__cone {
+    width: 62vw;
+  }
+}
+
+/* Motion off and reduced motion: everything already lit and in place. */
+@media (prefers-reduced-motion: reduce) {
+  .stadium__ball,
+  .stadium__ball--trail {
+    display: none;
+  }
+
+  .stadium__titleLine,
+  .stadium__eyebrow,
+  .stadium__player,
+  .stadium__tagline,
+  .stadium__actions,
+  .stadium__hint,
+  .stadium__board {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
+html[data-motion='off'] .stadium__ball,
+html[data-motion='off'] .stadium__ball--trail {
+  display: none;
+}
+
+html[data-motion='off'] .stadium__titleLine,
+html[data-motion='off'] .stadium__eyebrow,
+html[data-motion='off'] .stadium__player,
+html[data-motion='off'] .stadium__tagline,
+html[data-motion='off'] .stadium__actions,
+html[data-motion='off'] .stadium__hint,
+html[data-motion='off'] .stadium__board {
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
+}
+
+/* ============================================================
+   The live 3D backdrop
+   The 2D stadium paints instantly and stays as the fallback;
+   when WebGL is ready the live render fades in above it and the
+   2D world layers fade out beneath, keeping one grade over both.
+   ============================================================ */
+.stadium__canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 1400ms var(--ease-bloom);
+  pointer-events: none;
+}
+
+.stadium__canvas.is-ready {
+  opacity: 1;
+}
+
+.stadium__canvas canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.stadium__canvasGrade {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 118% 92% at 55% 46%, transparent 34%, rgba(1, 4, 7, 0.5) 100%),
+    linear-gradient(
+      180deg,
+      rgba(2, 6, 9, 0.34) 0%,
+      rgba(2, 6, 9, 0.04) 34%,
+      rgba(2, 6, 9, 0.08) 66%,
+      rgba(1, 4, 7, 0.5) 100%
+    );
+}
+
+.stadium__canvasGrade::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.stadium.is-3d .stadium__scene {
+  opacity: 0;
+  transition: opacity 1400ms var(--ease-bloom);
+}

@@ -1,0 +1,352 @@
+/* ============================================================
+   Pages: recruiter quick view, 404
+   ============================================================ */
+
+.recruiter {
+  padding-top: calc(var(--header-h) + clamp(1.5rem, 3vw, 2.5rem));
+  padding-bottom: var(--s-8);
+}
+
+.recruiter__shell {
+  max-width: 54rem;
+}
+
+.recruiter__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding-bottom: var(--s-4);
+  border-bottom: 1px solid var(--line);
+  margin-bottom: clamp(1.75rem, 3vw, 2.75rem);
+}
+
+.recruiter__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-xs);
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ash-400);
+  transition: color var(--d-2) var(--ease-roll);
+}
+
+.recruiter__back:hover {
+  color: var(--lime-400);
+}
+
+.recruiter__barActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+
+.recruiter__header {
+  margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
+}
+
+.recruiter__name {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 0.95;
+  text-transform: uppercase;
+  margin: 0.6rem 0 0.4rem;
+}
+
+.recruiter__role {
+  font-size: 1rem;
+  color: var(--ash-300);
+}
+
+.recruiter__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lime-400);
+}
+
+.recruiter__links a {
+  border-bottom: 1px solid rgba(198, 255, 61, 0.28);
+  padding-bottom: 1px;
+}
+
+.rcSection {
+  padding-block: clamp(1.25rem, 2.2vw, 1.75rem);
+  border-top: 1px solid var(--line-soft);
+}
+
+.rcSection h2 {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ash-500);
+  margin-bottom: 1rem;
+}
+
+.rcSection > p {
+  font-size: 0.9375rem;
+  line-height: 1.68;
+  color: var(--ash-300);
+}
+
+.rcSection > p + p {
+  margin-top: 0.75rem;
+}
+
+.rcList {
+  display: grid;
+}
+
+.rcItem {
+  display: grid;
+  gap: 0.3rem;
+  padding-block: 1rem;
+  border-top: 1px solid var(--line-soft);
+}
+
+.rcItem:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.rcItem__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+}
+
+.rcItem__head h3 {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--chalk);
+  line-height: 1.3;
+}
+
+.rcItem__date {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ash-500);
+  white-space: nowrap;
+}
+
+.rcItem__meta {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--ash-500);
+}
+
+.rcItem__note {
+  font-size: 0.75rem;
+  color: var(--ash-500);
+  line-height: 1.5;
+}
+
+.rcItem__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.15rem;
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--lime-400);
+}
+
+.rcItem__links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.rcBullets {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 0.35rem;
+}
+
+.rcBullets li {
+  position: relative;
+  padding-left: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.58;
+  color: var(--ash-300);
+}
+
+.rcBullets li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.66em;
+  width: 0.375rem;
+  height: 1px;
+  background: var(--ash-500);
+}
+
+.rcNote {
+  margin-top: 0.75rem;
+  font-size: 0.75rem;
+  color: var(--ash-500);
+}
+
+.rcSkills {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.rcSkills > div {
+  display: grid;
+  grid-template-columns: 11rem minmax(0, 1fr);
+  gap: 0.5rem 1rem;
+}
+
+.rcSkills dt {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--ash-500);
+  padding-top: 0.15rem;
+}
+
+.rcSkills dd {
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--ash-300);
+}
+
+.rcPub {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--ash-300);
+}
+
+.rcPub strong {
+  color: var(--chalk);
+}
+
+.rcCerts {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--ash-300);
+}
+
+.recruiter__foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: var(--s-6);
+  padding-top: var(--s-6);
+  border-top: 1px solid var(--line);
+}
+
+/* ---------------- 404 ---------------- */
+.notFound {
+  display: grid;
+  place-items: center;
+  min-height: 72svh;
+  padding-top: var(--header-h);
+  padding-bottom: var(--s-8);
+}
+
+.notFound__inner {
+  display: grid;
+  gap: var(--s-3);
+  justify-items: start;
+}
+
+.notFound__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 0.95;
+  letter-spacing: 0;
+}
+
+.notFound__copy {
+  color: var(--ash-400);
+  max-width: 46ch;
+  margin-bottom: var(--s-3);
+}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 640px) {
+  .rcSkills > div {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.15rem;
+  }
+}
+
+/* ---------------- Print: the recruiter view must be printable ---------------- */
+@media print {
+  :root {
+    --chalk: #111111;
+    --chalk-dim: #222222;
+    --ash-300: #333333;
+    --ash-400: #444444;
+    --ash-500: #555555;
+    --ink-950: #ffffff;
+    --ink-900: #ffffff;
+    --line: #dddddd;
+    --line-soft: #e8e8e8;
+    --line-strong: #cccccc;
+    --lime-400: #1a5c00;
+    --gold-300: #6b4f00;
+  }
+
+  body {
+    background: #ffffff;
+    color: #111111;
+  }
+
+  .siteHeader,
+  .siteFooter,
+  .skip-link,
+  .recruiter__barActions,
+  .recruiter__foot {
+    display: none !important;
+  }
+
+  .recruiter {
+    padding: 0;
+  }
+
+  .recruiter__shell {
+    max-width: none;
+  }
+
+  .rcSection {
+    break-inside: avoid;
+  }
+
+  .rcItem {
+    break-inside: avoid;
+  }
+
+  a {
+    text-decoration: none;
+    color: #111111;
+  }
+}
